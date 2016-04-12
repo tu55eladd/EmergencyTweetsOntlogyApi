@@ -1,4 +1,4 @@
-package main.java.application;
+package sparql;
 
 import org.mindswap.pellet.jena.PelletReasonerFactory;
 
@@ -43,7 +43,6 @@ public class SparqlQuerier {
 	public ResultSet querySelect(String queryString){
 		QueryExecution qe = setupQuery(queryString);
 		ResultSet rs = qe.execSelect();
-		//ResultSetFormatter.out(rs);
 		return rs;
 	}
 	

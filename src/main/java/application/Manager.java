@@ -1,5 +1,6 @@
 package main.java.application;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +55,7 @@ public class Manager {
 		//System.out.println(factory);
 		prefixManager = new DefaultPrefixManager(null,null,ontologyIRI.toString());
 		//System.out.println(prefixManager);
-		fireEventClass = getFireEventClass();
+		//fireEventClass = getFireEventClass();
 	}
 	
 	/**
@@ -119,7 +120,7 @@ public class Manager {
 	}
 	
 	
-	
+	/*
 	public void addFireEvent(String fireEventName){
 		OWLNamedIndividual fireEvent = getNamedIndividual(fireEventName);
 		
@@ -136,7 +137,7 @@ public class Manager {
 	
 	public OWLClass getFireEventClass(){
 		return getClass("Fire");
-	}
+	}*/
 	
 	/**
 	 * Use this method to specify that a given individual is a instance of the given class
@@ -153,7 +154,7 @@ public class Manager {
 	}
 	
 	public OWLObjectProperty getObjectProperty(String propertyName){
-		return factory.getOWLObjectProperty(propertyName, prefixManager);
+		return factory.getOWLObjectProperty("#"+propertyName, prefixManager);
 	}
 	
 	public ChangeApplied createAndAddClassAssertion(OWLClass owlClass, OWLNamedIndividual individual){

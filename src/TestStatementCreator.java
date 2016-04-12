@@ -15,12 +15,12 @@ import org.semanticweb.owlapi.model.OWLIndividualAxiom;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import main.java.application.Manager;
-import main.java.application.SparqlQuerier;
 import main.java.application.StatementCreator;
 import models.Statement;
 import ontologyCategories.AreaType;
 import ontologyCategories.DayType;
 import ontologyCategories.EvidenceType;
+import sparql.SparqlQuerier;
 
 public class TestStatementCreator {
 

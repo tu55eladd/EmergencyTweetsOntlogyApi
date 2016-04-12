@@ -9,8 +9,8 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import main.java.application.Manager;
-import main.java.application.SparqlQueryConstructor;
 import ontologyCategories.EventType;
+import sparql.SparqlQueryConstructor;
 
 public class TestSparqlQueryConstructor {
 

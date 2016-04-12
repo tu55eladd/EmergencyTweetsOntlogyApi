@@ -7,8 +7,9 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 
-import main.java.application.SparqlQuerier;
-import main.java.application.SparqlQueryConstructor;
+import ontologyCategories.EvidenceType;
+import sparql.SparqlQuerier;
+import sparql.SparqlQueryConstructor;
 
 public class TestSparqlQuerier {
 
@@ -20,6 +21,7 @@ public class TestSparqlQuerier {
 	public static void readOntology(){
 		sparqlQuerier = new SparqlQuerier(pathToOntology);
 		model = sparqlQuerier.getModel();
+		System.out.println("Finished setting up");
 	}
 
 	@Before
@@ -33,6 +35,7 @@ public class TestSparqlQuerier {
 		SparqlQuerier sq = new SparqlQuerier("res/EmergencyOntology.owl");
 	}
 	
+	@Ignore
 	@Test
 	public void testQuerySelect(){
 		SparqlQueryConstructor qc = new SparqlQueryConstructor();
@@ -41,20 +44,31 @@ public class TestSparqlQuerier {
 		ResultSet rs = sparqlQuerier.querySelect(selectQuery);
 	}
 	
+	@Ignore
 	@Test
 	public void testQuerySubjectHasDay(){
 		SparqlQueryConstructor qc = new SparqlQueryConstructor();
 		String query = qc.getSubjectWithHasDay("");
 		System.out.println(query);
 		System.out.println("---");
+		ResultSet rs = sparqlQuerier.querySelect(query);/*
+		while(rs.hasNext()){
+			QuerySolution qs = rs.next();
+			System.out.println(qs);
+		}*/
+		
+	}
+	
+	@Test
+	public void testEvidence(){
+		SparqlQueryConstructor qc = new SparqlQueryConstructor();
+		String query = qc.getStatementsWithEvidencesOfType(EvidenceType.DRUGS);
+		System.out.println(query);
 		ResultSet rs = sparqlQuerier.querySelect(query);
 		while(rs.hasNext()){
 			QuerySolution qs = rs.next();
 			System.out.println(qs);
 		}
-		
 	}
-	
-	
 
 }

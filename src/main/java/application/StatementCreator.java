@@ -16,6 +16,7 @@ public class StatementCreator {
 	final static String hasLocationPropertyName = "hasLocation";
 	final static String hasEventPropertyName = "hasEvent";
 	final static String hasEvidencePropertyName = "hasEvidence";
+	final static String isEvidenceOfName = "isEvidenceOf";
 	OWLNamedIndividual individualStatement;
 	
 	public StatementCreator(Manager manager){
@@ -58,8 +59,9 @@ public class StatementCreator {
 		// get evidence
 		if(statement.getEvidenceType() != null){
 			OWLNamedIndividual evidence = manager.getNamedIndividual(statement.getEvidenceType()+"Individual");			
-			OWLObjectProperty hasEvidence = manager.getObjectProperty(hasEvidencePropertyName);
-			manager.createAndAddPropertyAssertion(individualStatement, evidence, hasEvidence);
+			OWLObjectProperty isEvidenceOf = manager.getObjectProperty(isEvidenceOfName);
+			//OWLObjectProperty hasEvidence = manager.getObjectProperty(hasEvidencePropertyName);
+			manager.createAndAddPropertyAssertion(evidence, individualStatement, isEvidenceOf);
 		}
 
 		return true;

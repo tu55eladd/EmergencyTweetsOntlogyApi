@@ -1,4 +1,4 @@
-package main.java.application;
+package sparql;
 
 import org.apache.jena.atlas.lib.NotImplemented;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -57,8 +57,16 @@ public class SparqlQueryConstructor {
 	}
 	
 	public String getStatementsWithEvidencesOfType(String type){
+		query = "";
+		addPrefix(OBJECT_PROP);
+		addPrefix(CLASS);
+		addPrefix(TYPE);
 		
-		return null;
+		query += "SELECT ?statement WHERE { "
+			   + " ?statement myOntIndividual:hasEvidence myOnt:"+type+"Individual ";
+		query += " }";
+		
+		return query;
 	}
 	
 	public void and(){

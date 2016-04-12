@@ -8,4 +8,5 @@ public class EventType {
 	public final static String VIOLENCE = "Violence";
 	public final static String ROBBERY = "Robbery";
 	public final static String SEARCH = "Search";
+	public final static String CRIME = "Crime";
 }

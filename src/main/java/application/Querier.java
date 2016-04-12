@@ -9,6 +9,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 
 import ontologyCategories.EventType;
+import ontologyCategories.PropertyTypes;
 
 public class Querier {
 	

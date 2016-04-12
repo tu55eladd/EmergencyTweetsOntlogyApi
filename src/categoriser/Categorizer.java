@@ -13,9 +13,11 @@ import ontologyCategories.EvidenceType;
 public class Categorizer {
 
 	// Evidence
-	static String[] drugList = {"hasj","kokain","mdma","amfetamin","narkotika","narkotiske"," nark "};
-	static String[] gunList = {"pistol","gevær","skudd","skutt","bevæpnet"};
+	static String[] drugList = {"hasj","kokain","mdma","amfetamin","narkotika","narkotiske"," nark ","cannabis","marihuana"};
+	static String[] gunList = {"pistol","gevær","skudd","skutt","bevæpnet","våpen"};
 	static String[] knifeList = {"kniv"};
+	
+	static String[] alcoholList = {"alkohol","øl","sprit"," fyll","overstadig","beruset","glattcelle"};
 
 	// Events
 	static String[] robberyList = {"ran", "stjålet", "tyveri", "innbrudd","stjele"};
@@ -38,7 +40,6 @@ public class Categorizer {
 		Statement st = new Statement();
 		
 		String id = t.getId();
-		String name = t.getName();
 		String content = t.getContent();
 		
 		List<String> eventTypes = extractEventCategory(content);
@@ -53,11 +54,13 @@ public class Categorizer {
 			eventNames.add(eventName);
 		}
 		
-		st.setStatementName(name);
+		st.setStatementName(id);
 		st.setEventTypes(eventTypes);
 		st.setEventNames(eventNames);
-		st.setEvidence(id+evidenceType);
-		st.setEvidenceType(evidenceType);
+		if(evidenceType != null){
+			st.setEvidence(id+evidenceType);
+			st.setEvidenceType(evidenceType);			
+		}
 		st.setDay(weekDay);
 		
 		return st;
@@ -70,6 +73,9 @@ public class Categorizer {
 		}
 		if(containsGuns(message)){
 			return EvidenceType.GUN;
+		}
+		if(containsAlcohol(message)){
+			return EvidenceType.ALCOHOL;
 		}
 		if(containsKnifes(message)){
 			return EvidenceType.KNIFE;
@@ -126,6 +132,10 @@ public class Categorizer {
 		
 	}
 	
+	public static boolean containsAlcohol(String message){
+		return genericContains(alcoholList, message);
+	}
+	
 	public static boolean containsSearch(String message){
 		return genericContains(searchList, message);
 	}
@@ -176,7 +186,7 @@ public class Categorizer {
 	}
 
 	public static boolean containsInjuri(String message){
-		String[] negations = {"ingen", "uskadd"};
+		String[] negations = {"ingen", "uskadd","ikke"};
 		return genericContains(injuriList, message, negations);
 	}
 	

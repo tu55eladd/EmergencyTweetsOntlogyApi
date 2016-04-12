@@ -12,14 +12,9 @@ import models.Tweet;
 
 public class Main {
 
-	public static void main(String[] args) {/*
+	public static void smain(String[] args) {/*
 		System.out.println("Application started !");
 	
-		String fileName = "res/EmergencyOntology.owl";
-		Manager manager = new Manager();
-		manager.init();
-		manager.loadOntology(fileName);
-		
 		EventCreator eventCreator = new EventCreator();
 		eventCreator.init(manager);
 		AreaCreator areaCreator = new AreaCreator();
@@ -56,27 +51,29 @@ public class Main {
 			System.out.println(individual.getEntities());
 		}
 		
-		Query q = new Query();
+		StandardQuerier q = new StandardQuerier();
 		q.init(manager.ontology);*/
 		
 		Manager manager = new Manager();
 		manager.init();
 		manager.loadOntology(Config.ONTOLOGY_FILE_PATH);
 		
+		/*
 		try {
-			Runtime.getRuntime().exec("COPY res/EmergencyOntology.owl res/EmergencyOntologyTest.owl");
+			Runtime.getRuntime().exec("del res\\EmergencyOntologyTest.owl");
+			Runtime.getRuntime().exec("copy res\\EmergencyOntology.owl res\\EmergencyOntologyTest.owl");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
-		}
+		}*/
 		
 		StatementCreator stCreator = new StatementCreator(manager);
 		
 		Repo repo = new Repo();
 		repo.connect();
 		
-		List<Tweet> tweets = repo.getTweets(1000);
+		List<Tweet> tweets = repo.getTweets(-1);
 		List<Statement> sts = Categorizer.extractCategories(tweets);
 		System.out.println("Inserting statements");
 		int count = 1;

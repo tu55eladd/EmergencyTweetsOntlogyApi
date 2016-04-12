@@ -33,7 +33,13 @@ public class Repo {
 		List<Tweet> tweets = new ArrayList<>();
 		
 		try {
-			String query = "SELECT * FROM tweets LIMIT "+limit+";";
+			String query;
+			if(limit==-1){
+				query = "SELECT * FROM tweets;";
+			}
+			else{
+				query = "SELECT * FROM tweets LIMIT "+limit+";";				
+			}
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(query);
 			while(rs.next()){
