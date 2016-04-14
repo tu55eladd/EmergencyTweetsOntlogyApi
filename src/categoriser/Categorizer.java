@@ -13,18 +13,17 @@ import ontologyCategories.EvidenceType;
 public class Categorizer {
 
 	// Evidence
-	static String[] drugList = {"hasj","kokain","mdma","amfetamin","narkotika","narkotiske"," nark ","cannabis","marihuana"};
+	static String[] drugList = {"hasj","kokain","mdma","amfetamin","narkotika","narkotiske","nark","cannabis","marihuana"};
 	static String[] gunList = {"pistol","gevær","skudd","skutt","bevæpnet","våpen"};
 	static String[] knifeList = {"kniv"};
-	
-	static String[] alcoholList = {"alkohol","øl","sprit"," fyll","overstadig","beruset","glattcelle"};
+	static String[] alcoholList = {"alkohol","øl","sprit"," fyll","overstadig","beruset","glattcelle","ruset"};
 
 	// Events
 	static String[] robberyList = {"ran", "stjålet", "tyveri", "innbrudd","stjele"};
-	static String[] violenceList = {"slagsmål", " slag", "spark"};
+	static String[] violenceList = {"slagsmål", " slag", "sparket"," vold"};
 	static String[] fireList = {"røyk", "brann","påtent"};
-	static String[] collisionList = {"kollisjon", "trafikkuhell", "trafikkulykke", "bilstans", "trafikkstans","kjøretøystans", "promillekjør","kjørte på","påkjørt","påkjørsel", "kjørt i ","bil med stans"};
-	static String[] injuriList = {" skadd", "skadet", "skader", "sloss"," slått"," skade "};
+	static String[] collisionList = {"kollisjon", "trafikkuhell", "trafikkulykke", "bilstans", "trafikkstans","kjøretøystans", "promillekjør","kjørte på","påkjørt","påkjørsel", "kjørt i","bil med stans"};
+	static String[] injuriList = {"skadd", "skadet", "skader", "sloss","slått","skade "};
 	static String[] searchList = {"vi søker etter","vi leter etter"};
 	
 	public static List<Statement> extractCategories(List<Tweet> tweets){
@@ -141,48 +140,23 @@ public class Categorizer {
 	}
 	
 	public static boolean containsDrugs(String message){
-		for(int i =0; i<drugList.length; i++){
-			String drugWord = drugList[i];
-			if (message.contains(drugWord)) return true;
-		}
-		
-		return false;
+		return genericContains(drugList, message);
 	}
 	
 	public static boolean containsGuns(String message){
-		for(int i =0; i<gunList.length; i++){
-			String gunWord = gunList[i];
-			if (message.contains(gunWord)) return true;
-		}
-		
-		return false;
+		return genericContains(gunList, message);
 	}
 	
 	public static boolean containsKnifes(String message){
-		for(int i =0; i<knifeList.length; i++){
-			String knifeWord = knifeList[i];
-			if (message.contains(knifeWord)) return true;
-		}
-		
-		return false;
+		return genericContains(knifeList, message);
 	}
 
 	public static boolean containsFire(String message){
-		for(int i =0; i<fireList.length; i++){
-			String fireWord = fireList[i];
-			if (message.contains(fireWord)) return true;
-		}
-		
-		return false;
+		return genericContains(fireList, message);
 	}
 	
 	public static boolean containsTrafficCollision(String message){
-		for(int i =0; i<collisionList.length; i++){
-			String collisionWord = collisionList[i];
-			if (message.contains(collisionWord)) return true;
-		}
-		
-		return false;
+		return genericContains(collisionList, message);
 	}
 
 	public static boolean containsInjuri(String message){
@@ -238,7 +212,13 @@ public class Categorizer {
 	public static boolean genericContains(String[] words , String message){
 		for(int i =0; i<words.length; i++){
 			String word = words[i];
-			if(message.contains(word)) return true;
+			int index = message.indexOf(word);
+			int wordLength = word.length();
+			if(index != -1){
+				if(legalSuffix(message,index,wordLength) && legalPrefix(message,index)){
+					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -246,13 +226,42 @@ public class Categorizer {
 	public static boolean genericContains(String[] words, String message, String[] falseWords){
 		for(int i =0; i<words.length; i++){
 			String word = words[i];
-			if(message.contains(word)){
+			if(containsWord(message,word)){
 				boolean haveNegation = false;
 				for(int u=0; u<falseWords.length; u++){
 					if(message.contains(falseWords[u])) haveNegation = true;
 				}
 				if(!haveNegation) return true;
 			}
+		}
+		return false;
+	}
+	
+	public static boolean containsWord(String message, String word){
+		int index = message.indexOf(word);
+		int wordLength = word.length();
+		if(index != -1){
+			if(legalSuffix(message,index,wordLength) && legalPrefix(message,index)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean legalPrefix(String message, int index){
+		if(index == 0) return true;
+		char preFix = message.charAt(index-1);
+		if(preFix == ' ' || preFix == '.' || preFix == ','){
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean legalSuffix(String message, int index, int wordLength){
+		if(message.length() <= index+wordLength ) return true;
+		char suffix = message.charAt(index+wordLength);
+		if(suffix == ' ' || suffix == '.' || suffix == ','){
+			return true;
 		}
 		return false;
 	}
