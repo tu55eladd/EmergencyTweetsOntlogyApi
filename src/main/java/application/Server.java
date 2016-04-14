@@ -32,7 +32,7 @@ public class Server {
 	
 	static final String IS_EVIDENCE_OF = "isEvidenceOf";
 	StandardQuerier querier;
-	Manager manager;
+	static Manager manager;
 	StatementCreator statementCreator;
 	
 	public Server(){
@@ -177,9 +177,7 @@ public class Server {
 	public void addTweet(@RequestBody List<Tweet> tweets){
 		if(tweets == null) return;
 		
-		if(manager == null){
-			manager = new Manager();
-			manager.loadOntology(Config.ONTOLOGY_FILE_PATH);			
+		if(statementCreator == null){
 			statementCreator = new StatementCreator(manager);
 		}
 		
