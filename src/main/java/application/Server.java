@@ -10,8 +10,9 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.Node;
+import org.semanticweb.owlapi.reasoner.NodeSet;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Sets;
 
+import categoriser.Categorizer;
 import config.Config;
+import models.Statement;
+import models.Tweet;
 import ontologyCategories.EventType;
 import ontologyCategories.EvidenceType;
 
@@ -29,6 +33,7 @@ public class Server {
 	static final String IS_EVIDENCE_OF = "isEvidenceOf";
 	StandardQuerier querier;
 	Manager manager;
+	StatementCreator statementCreator;
 	
 	public Server(){
 		init();
@@ -166,6 +171,23 @@ public class Server {
 			Set<String> set2 = new HashSet<>(getInstancesOfEvidenceType(evidence));
 			return Sets.intersection(set, set2);
 		}
+	}
+	
+	@RequestMapping(value= "/addTweet" , method = RequestMethod.POST)
+	public void addTweet(@RequestBody List<Tweet> tweets){
+		if(tweets == null) return;
+		
+		if(manager == null){
+			manager = new Manager();
+			manager.loadOntology(Config.ONTOLOGY_FILE_PATH);			
+			statementCreator = new StatementCreator(manager);
+		}
+		
+		for(Tweet t : tweets){
+			Statement st = Categorizer.extractCategories(t);
+			statementCreator.addStatement(st);			
+		}
+		
 	}
 	
 	public OWLClass getEventClass(String event){

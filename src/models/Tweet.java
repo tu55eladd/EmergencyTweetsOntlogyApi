@@ -4,7 +4,7 @@ public class Tweet {
 
 	String id;
 	String username;
-	String name;
+	//String name;
 	String content;
 	String timestamp;
 
@@ -20,12 +20,13 @@ public class Tweet {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	/*
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
+	}*/
 	public String getContent() {
 		return content;
 	}
