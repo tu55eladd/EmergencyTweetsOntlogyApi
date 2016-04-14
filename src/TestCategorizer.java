@@ -1,10 +1,11 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class TestCategorizer {
 	static List<Tweet> tweets;
 	static int tweetCount = 300000;
 	
-	@BeforeClass
+	
 	public static void getExampleTweets(){
 		Repo repo = new Repo();
 		repo.connect();
@@ -80,14 +81,16 @@ public class TestCategorizer {
 		
 	}
 	
+	@Ignore
 	@Test
 	public void testExample(){
-		String content = "vi er på stedet, en mann pågrepet, funn av startpistol, forts";
+		String content = "vi er pÃ¥ stedet, en mann pÃ¥grepet, funn av startpistol, forts";
 		String evidence = Categorizer.extractEvidenceCategory(content);
 		assertEquals(evidence,ontologyCategories.EvidenceType.GUN);
 		//System.out.println(eventTypes);
 	}
 
+	@Ignore
 	@Test
 	public void testReturnNullWhenNoEventOrEvidence(){
 		String message = "asdfasdf";
@@ -101,6 +104,7 @@ public class TestCategorizer {
 		
 	}
 
+	@Ignore
 	@Test
 	public void testReturnRate(){
 		List<Statement> sts = Categorizer.extractCategories(tweets);
@@ -109,11 +113,46 @@ public class TestCategorizer {
 		System.out.println("Total extraction rate : "+rate);
 	}
 	
+	@Ignore
 	@Test
 	public void testWeekDayExtractor(){
 		String timestamp = "2016-02-19 16:35:06";
 		String weekday = Categorizer.extractWeekday(timestamp);
 		assertEquals(weekday, DayType.FRIDAY);
+		
+	}
+	
+	@Test
+	public void testLegalPrefix(){
+		String a = " asdf ";
+		String b = ",asdf ";
+		String c = ".asdf ";
+		String d = "uasdf ";
+		String e = "asdf ";
+		int index = 1;
+		
+		assertTrue(Categorizer.legalPrefix(a, index ));	
+		assertTrue(Categorizer.legalPrefix(b, index ));	
+		assertTrue(Categorizer.legalPrefix(c, index ));
+		assertFalse(Categorizer.legalPrefix(d, index ));	
+		assertTrue(Categorizer.legalPrefix(e, index-1 ));
+	}
+	
+	@Test
+	public void testLegalSuffix(){
+		String a = " asdf.";
+		String b = " asdf ";
+		String c = " asdf,";
+		String d = " asdfu";
+		String e = " asdf";
+		int index = 1;
+		int wordLength = 4;
+		
+		assertTrue(Categorizer.legalSuffix(a, index, wordLength));	
+		assertTrue(Categorizer.legalSuffix(b, index, wordLength));	
+		assertTrue(Categorizer.legalSuffix(c, index, wordLength));
+		assertFalse(Categorizer.legalSuffix(d, index, wordLength));	
+		assertTrue(Categorizer.legalSuffix(e, index, wordLength));
 		
 	}
 }

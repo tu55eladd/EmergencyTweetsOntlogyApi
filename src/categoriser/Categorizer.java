@@ -19,8 +19,8 @@ public class Categorizer {
 	static String[] alcoholList = {"alkohol","øl","sprit"," fyll","overstadig","beruset","glattcelle","ruset"};
 
 	// Events
-	static String[] robberyList = {"ran", "stj�let", "tyveri", "innbrudd","stjele"};
-	static String[] violenceList = {"slagsm�l", " slag", "sparket"," vold"};
+	static String[] robberyList = {"ran", "stjålet", "tyveri", "innbrudd","stjele"};
+	static String[] violenceList = {"slagsmål", " slag", "sparket"," vold"};
 	static String[] fireList = {"røyk", "brann","påtent"};
 	static String[] collisionList = {"kollisjon", "trafikkuhell", "trafikkulykke", "bilstans", "trafikkstans","kjøretøystans", "promillekjøring","kjørte på","påkjørt","påkjørsel", "kjørt i","bil med stans"};
 	static String[] injuriList = {"skadd", "skadet", "skader", "sloss","slått","skade "};

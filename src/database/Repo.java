@@ -43,7 +43,6 @@ public class Repo {
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(query);
 			while(rs.next()){
-				String name = rs.getString("name");
 				String content = rs.getString("content");
 				String id = rs.getString("id");
 				String username = rs.getString("username");
@@ -53,7 +52,6 @@ public class Repo {
 				t.setContent(content);
 				t.setId(id);
 				t.setUsername(username);
-				t.setName(name);
 				t.setTimestamp(time);
 				tweets.add(t);
 			}
