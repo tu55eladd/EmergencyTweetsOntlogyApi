@@ -14,17 +14,17 @@ public class Categorizer {
 
 	// Evidence
 	static String[] drugList = {"hasj","kokain","mdma","amfetamin","narkotika","narkotiske","nark","cannabis","marihuana"};
-	static String[] gunList = {"pistol","gevær","skudd","skutt","bevæpnet","våpen"};
+	static String[] gunList = {"pistol","gevÃ¦r","skudd","skutt","bevÃ¦pnet","vÃ¥pen"};
 	static String[] knifeList = {"kniv"};
-	static String[] alcoholList = {"alkohol","øl","sprit"," fyll","overstadig","beruset","glattcelle","ruset"};
+	static String[] alcoholList = {"alkohol","Ã¸l","sprit"," fyll","overstadig","beruset","glattcelle","ruset"};
 
 	// Events
-	static String[] robberyList = {"ran", "stjålet", "tyveri", "innbrudd","stjele"};
-	static String[] violenceList = {"slagsmål", " slag", "sparket"," vold"};
-	static String[] fireList = {"røyk", "brann","påtent"};
-	static String[] collisionList = {"kollisjon", "trafikkuhell", "trafikkulykke", "bilstans", "trafikkstans","kjøretøystans", "promillekjør","kjørte på","påkjørt","påkjørsel", "kjørt i","bil med stans"};
-	static String[] injuriList = {"skadd", "skadet", "skader", "sloss","slått","skade "};
-	static String[] searchList = {"vi søker etter","vi leter etter"};
+	static String[] robberyList = {"ran", "stjï¿½let", "tyveri", "innbrudd","stjele"};
+	static String[] violenceList = {"slagsmï¿½l", " slag", "sparket"," vold"};
+	static String[] fireList = {"rÃ¸yk", "brann","pÃ¥tent"};
+	static String[] collisionList = {"kollisjon", "trafikkuhell", "trafikkulykke", "bilstans", "trafikkstans","kjÃ¸retÃ¸ystans", "promillekjÃ¸ring","kjÃ¸rte pÃ¥","pÃ¥kjÃ¸rt","pÃ¥kjÃ¸rsel", "kjÃ¸rt i","bil med stans"};
+	static String[] injuriList = {"skadd", "skadet", "skader", "sloss","slÃ¥tt","skade "};
+	static String[] searchList = {"vi sÃ¸ker etter","vi leter etter"};
 	
 	public static List<Statement> extractCategories(List<Tweet> tweets){
 		ArrayList<Statement> sts = new ArrayList<>();
@@ -188,7 +188,7 @@ public class Categorizer {
 			if(message.contains(" syv ") || message.contains(" 7 ")){
 				injuriCount = 7;
 			}
-			if(message.contains(" åtte ") || message.contains(" 8 ")){
+			if(message.contains(" ï¿½tte ") || message.contains(" 8 ")){
 				injuriCount = 8;
 			}
 			if(message.contains(" ni ") || message.contains(" 9 ")){
